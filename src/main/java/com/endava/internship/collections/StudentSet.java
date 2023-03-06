@@ -1,68 +1,92 @@
 package com.endava.internship.collections;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 public class StudentSet implements Set<Student> {
+    private Set<Student> studentSet;
+    public StudentSet() {
+        studentSet = new HashSet<>();
+    }
     @Override
     public int size() {
-        //TODO
-        return 0;
+        return studentSet.size();
     }
 
     @Override
     public boolean isEmpty() {
-        //TODO
-        return false;
+        return studentSet.isEmpty();
     }
 
     @Override
     public boolean contains(Object o) {
-        //TODO
+        if (o instanceof Student) {
+            for (Student student : studentSet) {
+                if (student.getName().equals(((Student) o).getName()) &&
+                        student.getDateOfBirth().equals(((Student) o).getDateOfBirth())) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
     @Override
     public Iterator<Student> iterator() {
-        //TODO
-        return null;
+        return studentSet.iterator();
     }
 
     @Override
     public Object[] toArray() {
-        //TODO
-        return new Object[0];
+        return studentSet.toArray();
     }
 
     @Override
     public <T> T[] toArray(T[] ts) {
-        //TODO
-        return null;
+        int i = 0;
+        for (Student student : studentSet) {
+            ts[i] = (T) student;
+            i++;
+        }
+        return ts;
     }
 
     @Override
     public boolean add(Student student) {
-        //TODO
+        if (!contains(student)) {
+            studentSet.add(student);
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean remove(Object o) {
-        //TODO
-        return false;
+        return studentSet.remove(o);
     }
 
     @Override
     public void clear() {
-        //TODO
+        studentSet.clear();
     }
 
     @Override
     public boolean addAll(Collection<? extends Student> collection) {
-        //TODO
-        return false;
+        for (Student student : collection) {
+            if (!contains(student)) {
+                studentSet.add(student);
+            } else {
+                return false;
+            }
+        }
+        return true;
     }
+
+    public List<Student> sort() {
+        List<Student> students = new ArrayList<>(studentSet);
+        Collections.sort(students);
+        return students;
+    }
+
 
     @Override
     public boolean containsAll(Collection<?> collection) {
